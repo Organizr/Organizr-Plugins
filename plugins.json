@@ -12,6 +12,7 @@
     "release_date": "2018-07-12",
     "last_updated": "2021-06-14",
     "github_folder": "test",
+    "project_folder": "test",
     "license": "personal,business",
     "images": {
       "Main": "https://assets.hongkiat.com/uploads/automated-php-test/tdd-example.jpg",
@@ -31,6 +32,7 @@
     "release_date": "2021-10-03",
     "last_updated": "2021-10-11",
     "github_folder": "plexLibraries",
+    "project_folder": "plexLibraries",
     "license": "personal,business",
     "images": {
       "Plex Admin": "https://i.imgur.com/ebAwRp1.png",
