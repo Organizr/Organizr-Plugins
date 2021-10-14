@@ -1,5 +1,6 @@
 {
   "Test": {
+    "repo": "https://github.com/Organizr/Organizr-Plugins",
     "author": "CauseFX",
     "category": "Testing",
     "description": "This is a skeleton framework for an Organizr plugin - Please look at the file structure.",
@@ -18,6 +19,7 @@
     }
   },
   "Plex Libraries": {
+    "repo": "https://github.com/Organizr/Organizr-Plugins",
     "author": "TehMuffinMoo",
     "category": "Library Management",
     "description": "This is plugin to allow both Administrators and users to manage plex libraries from within Organizr.",
