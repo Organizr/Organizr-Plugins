@@ -4,11 +4,11 @@ $GLOBALS['plugins']['plexlibraries'] = array( // Plugin Name
 	'name' => 'Plex Libraries', // Plugin Name
 	'author' => 'TehMuffinMoo', // Who wrote the plugin
 	'category' => 'Library Management', // One to Two Word Description
-	'link' => '', // Link to plugin info
+	'link' => 'https://github.com/Organizr/Organizr-Plugins/tree/main/plexLibraries', // Link to plugin info
 	'license' => 'personal', // License Type use , for multiple
 	'idPrefix' => 'PLEXLIBRARIES', // html element id prefix (All Uppercase)
 	'configPrefix' => 'PLEXLIBRARIES', // config file prefix for array items without the hypen (All Uppercase)
-	'version' => '1.0.1', // SemVer of plugin
+	'version' => '1.0.2', // SemVer of plugin
 	'image' => 'api/plugins/plexLibraries/logo.png', // 1:1 non transparent image for plugin
 	'settings' => true, // does plugin need a settings modal?
 	'bind' => true, // use default bind to make settings page - true or false
@@ -57,8 +57,10 @@ class plexLibrariesPlugin extends Organizr
 	
 	public function plexLibrariesPluginGetPlexShares($includeAll = false, $userId = "")
 	{
+		$this->setLoggerChannel('Plex Libraries Plugin');
 		if (empty($this->config['plexToken'])) {
 			$this->setResponse(409, 'plexToken is not setup');
+			$this->logger->warning('plexToken is not setup');
 			return false;
 		}
 		$headers = array(
@@ -96,10 +98,11 @@ class plexLibrariesPlugin extends Organizr
 					return $apiData;
 				} else {
 					$this->setResponse(500, 'Plex error');
+					$this->logger->warning('Plex Error',$response);
 					return false;
 				}
 			} catch (Requests_Exception $e) {
-				$this->writeLog('error', 'PlexLibraries Plugin - Error: ' . $e->getMessage(), 'SYSTEM');
+				$this->logger->error($e);
 				$this->setAPIResponse('error', 'PlexLibraries Plugin - Error: ' . $e->getMessage(), 400);
 				return false;
 			}
@@ -147,11 +150,12 @@ class plexLibrariesPlugin extends Organizr
 					$this->setResponse(200, null, $apiData);
 					return $apiData;
 				} else {
+					$this->logger->warning('Plex Error',$response);
 					$this->setResponse(500, 'Plex Error', $response->body);
 					return false;
 				}
 			} catch (Requests_Exception $e) {
-				$this->writeLog('error', 'PlexLibraries Plugin - Error: ' . $e->getMessage(), 'SYSTEM');
+				$this->logger->error($e);
 				$this->setAPIResponse('error', 'PlexLibraries Plugin - Error: ' . $e->getMessage(), 400);
 				return false;
 			}
@@ -160,6 +164,7 @@ class plexLibrariesPlugin extends Organizr
 	
 	public function plexLibrariesPluginUpdatePlexShares($userId, $action, $shareId)
 	{
+		$this->setLoggerChannel('Plex Libraries Plugin');
 		if (!$userId) {
 			$this->setResponse(409, 'User Id not supplied');
 			return false;
@@ -181,6 +186,7 @@ class plexLibrariesPlugin extends Organizr
 			} else {
 				if ($plexUsers[$key]['shareId'] !== $userId) {
 					$this->setResponse(401, 'You are not allowed to edit someone else\'s plex share');
+					$this->logger->notice('Editing someone else\'s plex share is not permitted.',$userId);
 					return false;
 				}
 			}
@@ -235,11 +241,12 @@ class plexLibrariesPlugin extends Organizr
 					$this->setAPIResponse('success', $Msg, 200, $http_body);
 					return $http_body;
 				} else {
+					$this->logger->warning('Plex Error',$response);
 					$this->setAPIResponse('error', 'PlexLibraries Plugin - Error: Plex Error', 400);
 					return false;
 				}
 			} catch (Requests_Exception $e) {
-				$this->writeLog('error', 'PlexLibraries Plugin - Error: ' . $e->getMessage(), 'SYSTEM');
+				$this->logger->error($e);
 				$this->setAPIResponse('error', 'PlexLibraries Plugin - Error: ' . $e->getMessage(), 400);
 				return false;
 			}
