@@ -8,7 +8,7 @@ $GLOBALS['plugins']['plexlibraries'] = array( // Plugin Name
 	'license' => 'personal', // License Type use , for multiple
 	'idPrefix' => 'PLEXLIBRARIES', // html element id prefix (All Uppercase)
 	'configPrefix' => 'PLEXLIBRARIES', // config file prefix for array items without the hypen (All Uppercase)
-	'version' => '1.0.2', // SemVer of plugin
+	'version' => '1.0.3', // SemVer of plugin
 	'image' => 'api/plugins/plexLibraries/logo.png', // 1:1 non transparent image for plugin
 	'settings' => true, // does plugin need a settings modal?
 	'bind' => true, // use default bind to make settings page - true or false
@@ -37,7 +37,21 @@ class plexLibrariesPlugin extends Organizr
 				$this->settingsOption('button', '', ['label' => 'Get Plex Machine', 'icon' => 'fa fa-id-badge', 'text' => 'Retrieve', 'attr' => 'onclick="showPlexMachineForm(\'#PLEXLIBRARIES-settings-page [name=plexID]\')"']),
 				$this->settingsOption('auth', 'PLEXLIBRARIES-pluginAuth'),
 				$this->settingsOption('input', 'plexAdmin', ['label' => 'Plex Admin Username or Email']),
-				$this->settingsOption('plex-library-include', 'PLEXLIBRARIES-librariesToInclude', ['options' => $libraryList])
+				$this->settingsOption('plex-library-include', 'PLEXLIBRARIES-librariesToInclude', ['options' => $libraryList]),
+				$this->settingsOption('switch', 'PLEXLIBRARIES-disableModal-include', ['label' => 'Disable access from user dropdown menu', 'help' => 'Enabling this will turn off the button for the Plex Libraries Plugin within the user dropdown menu in the top right hand corner. This should be used when configuring the plugin as an Organizr Tab, for more info see the About section of the plugin settings.'])
+
+			),
+			'About' => array (
+				$this->settingsOption('notice', '', ['title' => 'Information', 'body' => '
+				<h3 lang="en">Plugin Information</h3>
+				<p>This plugin allows you to enable/disable plex shares for your users from within Organizr.</p>
+				<br/>
+				<h3>Using it as an Organizr Tab</h3>
+				<p>If you prefer, you can use the Plex Libraries plugin as an Organizr tab instead of accessing it via the dropdown menu in the top right-hand corner.</p>
+				<p>To configure this, create a new Tab in Organizr using the URL below. The tab <b>must</b> be created using the <u>Organizr</u> Type, using iFrame will not work as expected.</p>
+				<code class="elip hidden-xs">/api/v2/page/plex_libraries</code>
+				<h4>When using this plugin as an Organizr tab, we suggest disabling access to the plugin via the user dropdown menu to avoid unexpected issues. You can do this using the toggle in the plugin settings.</h4>'
+				]),
 			)
 		);
 	}
