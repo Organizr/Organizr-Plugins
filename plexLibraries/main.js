@@ -1,7 +1,9 @@
 /* This file is loaded when Organizr is loaded */
 // Load once Organizr loads
 $('body').arrive('#activeInfo', {onceOnly: true}, function() {
-	plexLibrariesPluginLaunch();
+	if (!activeInfo.plugins.includes["PLEXLIBRARIES-disableModal-include"]) {
+		plexLibrariesPluginLaunch();
+	}
 });
 // FUNCTIONS
 function plexLibrariesPluginLaunch(){
