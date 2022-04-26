@@ -8,7 +8,7 @@
         /*
          * Take this out if you dont want to be for admin only
          */
-        if (!$Organizr->qualifyRequest(1, true)) {
+        if (!$Organizr->qualifyRequest($Organizr->config['PLEXLIBRARIES-pluginAuth'], true)) {
             return false;
         }
         return '
